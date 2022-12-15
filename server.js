@@ -4,6 +4,8 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const db = require('./app/models')
 const Role = db.role
+require('./app/routes/auth.routes')(app)
+require('./app/routes/user.routes')(app)
 
 corsOptions = {
   origin: 'http://localhost:8081'
