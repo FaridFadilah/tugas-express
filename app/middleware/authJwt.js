@@ -4,7 +4,7 @@ const { role } = require('../models')
 const db = require('../models')
 const User = db.user
 
-verifyToken = (req, res, next) => {
+const verifyToken = (req, res, next) => {
   let token = req.headers['x-access-token']
 
   if(!token){
@@ -24,7 +24,7 @@ verifyToken = (req, res, next) => {
   })
 }
 
-isAdmin = (req, res, next) => {
+const isAdmin = (req, res, next) => {
   User.findByPk(req,userId).then(user => {
     for(let i = 0; i<role.length; i++){
       if(roles[i].name === 'admin'){
@@ -38,7 +38,7 @@ isAdmin = (req, res, next) => {
     return
   })
 }
-isModerator = (req, res, next) => {
+const isModerator = (req, res, next) => {
   User.findByPk(req, userId).then(user => {
     User.getRoles().then(roles => {
       for(let i = 0; i< roles.length; i++){

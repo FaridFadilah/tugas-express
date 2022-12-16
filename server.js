@@ -4,8 +4,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const db = require('./app/models')
 const Role = db.role
-require('./app/routes/auth.routes')(app)
-require('./app/routes/user.routes')(app)
+
 
 corsOptions = {
   origin: 'http://localhost:8081'
@@ -14,9 +13,6 @@ corsOptions = {
 app.use(cors(corsOptions))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
-app.get('/', (req, res) => {
-  res.json({ message: 'welcome to bezkoder application'})
-})
 
 db.sequelize.sync({force: true}).then(() => {
   console.log('Drop and resync DB')
@@ -37,6 +33,15 @@ function initial(){
     name: "admin"
   });
 }
+
+app.get('/', (req,res) => {
+  res.status(200).send({
+    msg: 'success'
+  })
+})
+
+require('./app/routes/auth.routes')(app)
+require('./app/routes/user.routes')(app)
 
 const PORT = process.env.PORT || 8080
 app.listen(PORT, () => {
